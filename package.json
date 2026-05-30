@@ -1,13 +1,16 @@
 {
   "name": "desafio-login",
   "version": "1.0.0",
-  "description": "Desafio de login com testes automatizados",
-  "main": "src/login.js",
+  "description": "Desafio com testes automatizados",
+  "main": "src/ServicoDePagamento.js",
   "scripts": {
-    "test": "node --test"
+    "test": "mocha"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "devDependencies": {
+    "mocha": "^11.2.2"
+  },
   "type": "commonjs"
 }
