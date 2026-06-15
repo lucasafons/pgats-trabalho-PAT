@@ -1,0 +1,45 @@
+name: CI - Testes Automatizados
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+  schedule:
+    - cron: "0 9 * * 1"
+
+jobs:
+  testes:
+    name: Executar testes
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Baixar codigo
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Executar testes automatizados
+        run: npm test
+
+      - name: Gerar relatorio de testes
+        if: always()
+        run: |
+          mkdir -p reports
+          npx mocha --reporter json > reports/test-results.json
+
+      - name: Publicar relatorio na pipeline
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: relatorio-testes
+          path: reports/test-results.json
+          retention-days: 30
